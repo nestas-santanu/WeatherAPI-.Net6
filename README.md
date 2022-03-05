@@ -15,7 +15,7 @@ But it was inspiration to create a Weather API that would also focus on 'other t
 
 Weather data is sourced from the World Meteorological Organization.
 
-## The Domain 
+### The Domain 
 
 An understanding of how the World Meteorological Organization (WMO) provides the data is required. This is avaialable at https://worldweather.wmo.int/en/pilot.html.
 
