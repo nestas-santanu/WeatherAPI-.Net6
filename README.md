@@ -38,6 +38,6 @@ The link GET /api/v1/weather/wmo is the start point of the Weather API.
 
 With HATEOAS the response during errors need to provide support for recovery of the client. This can be quite complex, especially if the errors are from a POST/PUT/PATCH.
 
-[RFC 7807](https://tools.ietf.org/html/rfc7807), defines a standard method for returning details of errors in a HTTP response. This can be extended to provide additional details. .NET has an inbuilt ProblemDetails class based on RFC 7807. However, extending the ProblemDetails to include the complexities increased the code that had to written.
+[RFC 7807](https://tools.ietf.org/html/rfc7807), defines a standard method for returning details of errors in a HTTP response. This can be extended to provide additional details. .NET has an inbuilt ProblemDetails class based on RFC 7807. However, extending the ProblemDetails to include the complexities increased the code that had to be written.
 
-Instead, the Weather API adopted the problem details members to provide a unified response for both success and errors. See the WMOResponse class.
+Instead, the Weather API adopted the problem details members, as described in the RFC, to provide a unified response for both success and errors. See the WMOResponse class.
