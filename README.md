@@ -29,4 +29,8 @@ It also provides an API by which data is available for a city. See this at https
 
 ### What does the WeatherAPI provide?
 
-The WeatherAPI is HATEOAS driven, allowing the client to dynamically navigate the embedded links to utimately obtain the city forecast by country and city. The link GET /api/v1/weather/wmo is the start point of the the WeatherAPI.
+The WWIS API requires a client to have prior knowledge of the Id of a city.
+
+The WeatherAPI is HATEOAS driven, allowing the client to dynamically navigate the embedded links to utimately obtain the city forecast by **country** and **city**. This removes the need for the client to know the id of the city. Internally, it uses the WWIS API to obtain the data.
+
+The link GET /api/v1/weather/wmo is the start point of the the WeatherAPI.
