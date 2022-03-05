@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="WeatherForecast.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+    <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.4.0" />
+    <PackageReference Include="log4net" Version="2.0.14" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Weather.DataProvider.VS.Service\Weather.DataProvider.VS.Service.csproj" />
+    <ProjectReference Include="..\Weather.DataProvider.VS\Weather.DataProvider.VS.csproj" />
+    <ProjectReference Include="..\Weather.DataProvider.WMO.Cities.Service\Weather.DataProvider.WMO.Cities.Service.csproj" />
+    <ProjectReference Include="..\Weather.DataProvider.WMO.Cities\Weather.DataProvider.WMO.Cities.csproj" />
+    <ProjectReference Include="..\Weather.DataProvider.WMO.Resource\Weather.DataProvider.WMO.Resource.csproj" />
+    <ProjectReference Include="..\Weather.DataProvider.WMO.Service\Weather.DataProvider.WMO.Service.csproj" />
+    <ProjectReference Include="..\Weather.DataProvider.WMO\Weather.DataProvider.WMO.csproj" />
+    <ProjectReference Include="..\Weather.HTTPService.Service\Weather.HTTPService.Service.csproj" />
+    <ProjectReference Include="..\Weather.HTTPService\Weather.HTTPService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+</Project>
