@@ -7,30 +7,32 @@ namespace WeatherAPI.APIs.WMO.Response
 {
     public static class WMOAPIGateway
     {
-        internal static APIGatewayDTO CreateOkResponse(
+        internal static WMOResponse<APIGatewayDTO> CreateOkResponse(
             HttpContext context,
             IAppEndpoints endpoints,
             IDataProvider dataProvider)
         {
-            return new APIGatewayDTO
+            return new WMOResponse<APIGatewayDTO>
             {
                 Type = "https://httpstatuses.com/200",
                 Title = "OK",
                 Status = StatusCodes.Status200OK,
                 Detail = "Follow the wmoEndpoints to discover and navigate other APIs.",
                 Instance = context.Request.GetDisplayUrl(),
-
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new APIGatewayDTO
+                {
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
 
-        internal static APIGatewayDTO CreateErrorResponse(
+        internal static WMOResponse<APIGatewayDTO> CreateErrorResponse(
             HttpContext context,
             IAppEndpoints endpoints,
             IDataProvider dataProvider)
         {
-            return new APIGatewayDTO
+            return new WMOResponse<APIGatewayDTO>
             {
                 Type = "https://httpstatuses.com/500",
                 Title = "An unexpected error occurred.",
@@ -38,9 +40,11 @@ namespace WeatherAPI.APIs.WMO.Response
                 Detail = "The server may not be available or you may not have an active internet connection. " +
                 "If the issue persists, please report the error.",
                 Instance = context.Request.GetDisplayUrl(),
-
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new APIGatewayDTO
+                {
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
     }

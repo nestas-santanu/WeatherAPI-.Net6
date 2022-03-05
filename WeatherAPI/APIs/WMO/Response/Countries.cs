@@ -7,7 +7,7 @@ namespace WeatherAPI.APIs.WMO.Response
 {
     internal static class Countries
     {
-        internal static CountriesDTO CreateOkResponsee(
+        internal static WMOResponse<CountriesDTO> CreateOkResponsee(
             HttpContext context,
             List<string> countries,
             IAppEndpoints endpoints,
@@ -27,55 +27,62 @@ namespace WeatherAPI.APIs.WMO.Response
                 });
             }
 
-            return new CountriesDTO
+            return new WMOResponse<CountriesDTO>
             {
                 Type = "https://httpstatuses.com/200",
                 Title = "OK",
                 Status = StatusCodes.Status200OK,
                 Detail = $"{countries.Count} countries found.",
                 Instance = context.Request.GetDisplayUrl(),
-
-                Countries = _countries,
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new CountriesDTO
+                {
+                    Countries = _countries,
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
 
-        internal static CountriesDTO CreateNotFoundResponse(
+        internal static WMOResponse<CountriesDTO> CreateNotFoundResponse(
             HttpContext context,
             IAppEndpoints endpoints,
             IDataProvider dataProvider)
         {
-            return new CountriesDTO
+            return new WMOResponse<CountriesDTO>
             {
                 Type = "https://httpstatuses.com/404",
                 Title = "Not Found",
                 Status = StatusCodes.Status404NotFound,
                 Detail = "No countries were found.",
                 Instance = context.Request.GetDisplayUrl(),
-
-                Countries = null,
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new CountriesDTO
+                {
+                    Countries = null,
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
 
-        internal static CountriesDTO CreateErrorResponse(
+        internal static WMOResponse<CountriesDTO> CreateErrorResponse(
             HttpContext context,
             IAppEndpoints endpoints,
             IDataProvider dataProvider)
         {
-            return new CountriesDTO
+            return new WMOResponse<CountriesDTO>
             {
                 Type = "https://httpstatuses.com/500",
                 Title = "An unexpected error occurred.",
                 Status = StatusCodes.Status500InternalServerError,
-                Detail = "An error occurred obtaining countries.",
+                Detail = "An error occurred obtaining countries. " +
+                "You may try again. If the issue persists, please report the error.",
                 Instance = context.Request.GetDisplayUrl(),
-
-                Countries = null,
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new CountriesDTO
+                {
+                    Countries = null,
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
     }

@@ -3,6 +3,7 @@ using Weather.DataProvider.WMO.Cities.Service;
 using Weather.DataProvider.WMO.Resource;
 using Weather.DataProvider.WMO.Service;
 using WeatherAPI.APIs.WMO.Response.AppEndpoints;
+using WeatherAPI.APIs.WMO.Response.Models;
 
 namespace WeatherAPI.APIs.WMO.Controllers
 {
@@ -54,13 +55,13 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// The 'detail' element will have information about the error.
         /// </response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(Response.Models.APIGatewayDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(WMOResponse<APIGatewayDTO>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("", Name = "WMOAPIGateway")]
         public IActionResult GetAPIGateway()
         {
-            //the representation of the resource for this request
-            Response.Models.APIGatewayDTO? response;
+            //the response for this request
+            WMOResponse<APIGatewayDTO>? response;
 
             try
             {
@@ -98,14 +99,14 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// The API will return the same schema as in response code 200. However, the 'countries' element will be null.
         /// </response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(Response.Models.CountriesDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(WMOResponse<CountriesDTO>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("countries", Name = "WMOCountries")]
         public async Task<IActionResult> GetAllCountriesAsync()
         {
-            //the representation of the resource for this request
-            Response.Models.CountriesDTO? representation;
+            //the response for this request
+            WMOResponse<CountriesDTO>? response;
 
             try
             {
@@ -117,39 +118,39 @@ namespace WeatherAPI.APIs.WMO.Controllers
                 if (countries.Count == 0)
                 {
                     //create the not found response
-                    representation
+                    response
                         = WMO.Response.Countries.CreateNotFoundResponse(
                             Request.HttpContext,
                             endpoints,
                             acknowledgement);
 
-                    return new NotFoundObjectResult(representation)
+                    return new NotFoundObjectResult(response)
                     {
                         ContentTypes = { "application/problem+json" }
                     };
                 }
 
                 //create the ok response
-                representation
+                response
                     = WMO.Response.Countries.CreateOkResponsee(
                         Request.HttpContext,
                         countries,
                         endpoints,
                         acknowledgement);
 
-                return StatusCode(StatusCodes.Status200OK, representation);
+                return StatusCode(StatusCodes.Status200OK, response);
             }
             catch (Exception e)
             {
                 logger.LogError(e, "");
 
-                representation
+                response
                     = WMO.Response.Countries.CreateErrorResponse(
                         Request.HttpContext,
                         endpoints,
                         acknowledgement);
 
-                return StatusCode(StatusCodes.Status500InternalServerError, representation);
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
         }
 
@@ -158,7 +159,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// </summary>
         /// <param name="keyword">the keyword for the search</param>
         /// <returns></returns>
-        /// <response code="200">Returns the result from the search.</response>
+        /// <response code="200">Returns a collection of cities grouped by country.</response>
         /// <response code="400">Validation errors: Null/empty keyword.
         /// The API will return the same schema as in response code 200. However, the 'results' element will be null.
         /// </response>
@@ -169,7 +170,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// The API will return the same schema as in response code 200. However, the 'results' element will be null.
         /// </response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(Response.Models.SearchResultsDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(WMOResponse<SearchResultsDTO>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -177,20 +178,20 @@ namespace WeatherAPI.APIs.WMO.Controllers
         public async Task<IActionResult> SearchCityAsync(string keyword)
         {
             //the representation of the resource for this request
-            Response.Models.SearchResultsDTO? representation;
+            WMOResponse<SearchResultsDTO>? response;
 
             try
             {
                 if (string.IsNullOrWhiteSpace(keyword))
                 {
                     //create the bad request resource representation
-                    representation
+                    response
                         = WeatherAPI.APIs.WMO.Response.SearchResults.CreateValidationErrorResponse(
                             Request.HttpContext,
                             endpoints,
                             acknowledgement);
 
-                    return StatusCode(StatusCodes.Status400BadRequest, representation);
+                    return StatusCode(StatusCodes.Status400BadRequest, response);
                 }
 
                 var cities
@@ -201,18 +202,18 @@ namespace WeatherAPI.APIs.WMO.Controllers
                 if (cities.Count == 0)
                 {
                     //create the not found resource representation
-                    representation
+                    response
                         = WMO.Response.SearchResults.CreateNotFoundResponse(
                             Request.HttpContext,
                             keyword,
                             endpoints,
                             acknowledgement);
 
-                    return StatusCode(StatusCodes.Status404NotFound, representation);
+                    return StatusCode(StatusCodes.Status404NotFound, response);
                 }
 
                 //create the Ok resource representation
-                representation
+                response
                     = WMO.Response.SearchResults.CreateOkResponse(
                         Request.HttpContext,
                         keyword,
@@ -220,20 +221,20 @@ namespace WeatherAPI.APIs.WMO.Controllers
                         endpoints,
                         acknowledgement);
 
-                return StatusCode(StatusCodes.Status200OK, representation);
+                return StatusCode(StatusCodes.Status200OK, response);
             }
             catch (Exception e)
             {
                 logger.LogError(e, "Keyword: {a0}", keyword);
 
-                representation
+                response
                     = WMO.Response.SearchResults.CreateErrorResource(
                         Request.HttpContext,
                         keyword,
                         endpoints,
                         acknowledgement);
 
-                return StatusCode(StatusCodes.Status500InternalServerError, representation);
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
         }
 
@@ -253,28 +254,28 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// The API will return the same schema as in response code 200. However, the 'cities' element will be null.
         /// </response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(Response.Models.CitiesDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(WMOResponse<CitiesDTO>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("countries/{country}/cities", Name = "WMOCitiesByCountry")]
         public async Task<IActionResult> GetCitiesByCountryAsync(string country)
         {
-            //the representation of the resource for this request
-            Response.Models.CitiesDTO? representation;
+            //the reponse for this request
+            WMOResponse<CitiesDTO> reponse;
 
             try
             {
                 if (!ModelState.IsValid)
                 {
                     //create the validation error response
-                    representation
+                    reponse
                         = WMO.Response.Cities.CreateValidationErrorResponse(
                             Request.HttpContext,
                             endpoints,
                             acknowledgement);
 
-                    return new BadRequestObjectResult(representation)
+                    return new BadRequestObjectResult(reponse)
                     {
                         ContentTypes = { "application/problem+json" }
                     };
@@ -288,7 +289,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
                 if (cities.Count == 0)
                 {
                     //create the not found response
-                    representation
+                    reponse
                         = WMO.Response.Cities.CreateNotFoundResponse(
                             Request.HttpContext,
                             country,
@@ -296,14 +297,14 @@ namespace WeatherAPI.APIs.WMO.Controllers
                             acknowledgement);
 
 
-                    return new NotFoundObjectResult(representation)
+                    return new NotFoundObjectResult(reponse)
                     {
                         ContentTypes = { "application/problem+json" }
                     };
                 }
 
                 //create the Ok response
-                representation
+                reponse
                     = WMO.Response.Cities.CreateOkResponse(
                         Request.HttpContext,
                         country,
@@ -311,7 +312,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
                         endpoints,
                         acknowledgement);
 
-                return StatusCode(StatusCodes.Status200OK, representation);
+                return StatusCode(StatusCodes.Status200OK, reponse);
             }
             catch (Exception e)
             {
@@ -329,14 +330,14 @@ namespace WeatherAPI.APIs.WMO.Controllers
                 //    context: Request.HttpContext,
                 //    endpoints: endpoints);
 
-                representation
+                reponse
                     = WMO.Response.Cities.CreateErrorResponse(
                         Request.HttpContext,
                         country,
                         endpoints,
                         acknowledgement);
 
-                return StatusCode(StatusCodes.Status500InternalServerError, representation);
+                return StatusCode(StatusCodes.Status500InternalServerError, reponse);
             }
         }
 
@@ -358,7 +359,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// The API will return the same schema as in response code 200. However, the 'weather' element will be null.
         /// </response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(Response.Models.WeatherDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(WMOResponse<WeatherDTO>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -374,8 +375,8 @@ namespace WeatherAPI.APIs.WMO.Controllers
         [Route("countries/{country}/cities/{city}", Name = "WMOWeatherByCountryAndCity")]
         public async Task<IActionResult> GetWMOWeatherByCountryAndCityAsync(string country, string city)
         {
-            //the representation of the resource for this request
-            Response.Models.WeatherDTO? representation;
+            //the response for this request
+            WMOResponse<WeatherDTO> response;
             string message;
 
             try
@@ -397,14 +398,14 @@ namespace WeatherAPI.APIs.WMO.Controllers
                 if (!ModelState.IsValid)
                 {
                     message = "Both country and city are required.";
-                    representation
+                    response
                         = WMO.Response.CityWeather.CreateValidationErrorResponse(
                             Request.HttpContext,
                             message,
                             endpoints,
                             acknowledgement);
 
-                    return new BadRequestObjectResult(representation)
+                    return new BadRequestObjectResult(response)
                     {
                         ContentTypes = { "application/problem+json" }
                     };
@@ -430,14 +431,14 @@ namespace WeatherAPI.APIs.WMO.Controllers
                     //};
 
                     message = $"Weather information is not availble for {city}, {country}.";
-                    representation
+                    response
                         = WMO.Response.CityWeather.CreateNotFoundResponsee(
                             Request.HttpContext,
                             message,
                             endpoints,
                             acknowledgement);
 
-                    return new NotFoundObjectResult(representation)
+                    return new NotFoundObjectResult(response)
                     {
                         ContentTypes = { "application/problem+json" }
                     };
@@ -445,7 +446,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
 
                 //create the Ok response
                 message = $"Weather in {city}, {country}.";
-                representation
+                response
                     = WMO.Response.CityWeather.CreateOkResponse(
                         Request.HttpContext,
                         message,
@@ -453,7 +454,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
                         endpoints,
                         acknowledgement);
 
-                return StatusCode(StatusCodes.Status200OK, representation);
+                return StatusCode(StatusCodes.Status200OK, response);
             }
             catch (Exception e)
             {
@@ -465,15 +466,16 @@ namespace WeatherAPI.APIs.WMO.Controllers
                 //    context: Request.HttpContext,
                 //    endpoints: endpoints);
 
-                message = "An unexpected error occurred. You can try again. If the issue persists, please report the error.";
-                representation
+                message = $"An unexpected error occurred obtaining weather for {city}, {country}. " +
+                    "You may try again. If the issue persists, please report the error.";
+                response
                     = WMO.Response.CityWeather.CreateErrorResponse(
                         Request.HttpContext,
                         message,
                         endpoints,
                         acknowledgement);
 
-                return StatusCode(StatusCodes.Status500InternalServerError, representation);
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
         }
 
@@ -493,7 +495,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// The API will return the same schema as in response code 200. However, the 'weather' element will be null.
         /// </response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(Response.Models.WeatherDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(WMOResponse<WeatherDTO>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         //[ProducesResponseType(
@@ -506,8 +508,8 @@ namespace WeatherAPI.APIs.WMO.Controllers
         [Route("{cityId:int}", Name = "WMOWeatherByCityId")]
         public async Task<IActionResult> GetWMOWeatherByCityIdAsync(int cityId)
         {
-            //the representation of the resource for this request
-            WeatherAPI.APIs.WMO.Response.Models.WeatherDTO? representation;
+            //the response for this request
+            WMOResponse<WeatherDTO> response;
             string message;
 
             try
@@ -532,14 +534,14 @@ namespace WeatherAPI.APIs.WMO.Controllers
                     //};
 
                     message = $"Weather information is not availble for city with Id: {cityId}.";
-                    representation
+                    response
                         = WMO.Response.CityWeather.CreateNotFoundResponsee(
                             Request.HttpContext,
                             message,
                             endpoints,
                             acknowledgement);
 
-                    return new NotFoundObjectResult(representation)
+                    return new NotFoundObjectResult(response)
                     {
                         ContentTypes = { "application/problem+json" }
                     };
@@ -547,7 +549,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
 
                 //create the Ok response
                 message = $"Weather in city with Id: {cityId}.";
-                representation
+                response
                     = WMO.Response.CityWeather.CreateOkResponse(
                         Request.HttpContext,
                         message,
@@ -555,7 +557,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
                         endpoints,
                         acknowledgement);
 
-                return StatusCode(StatusCodes.Status200OK, representation);
+                return StatusCode(StatusCodes.Status200OK, response);
             }
             catch (Exception e)
             {
@@ -567,15 +569,16 @@ namespace WeatherAPI.APIs.WMO.Controllers
                 //    context: Request.HttpContext,
                 //    endpoints: endpoints);
 
-                message = "An unexpected error occurred. You can try again. If the issue persists, please report the error.";
-                representation
+                message = $"An unexpected error occurred obtaining weather for city with Id {cityId}. " +
+                    "You may try again. If the issue persists, please report the error.";
+                response
                     = WMO.Response.CityWeather.CreateErrorResponse(
                         Request.HttpContext,
                         message,
                         endpoints,
                         acknowledgement);
 
-                return StatusCode(StatusCodes.Status500InternalServerError, representation);
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
         }
     }

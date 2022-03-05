@@ -8,7 +8,7 @@ namespace WeatherAPI.APIs.WMO.Response
 {
     internal static class Cities
     {
-        internal static CitiesDTO CreateOkResponse(
+        internal static WMOResponse<CitiesDTO> CreateOkResponse(
             HttpContext context,
             string country,
             List<City> cities,
@@ -32,80 +32,89 @@ namespace WeatherAPI.APIs.WMO.Response
                 });
             }
 
-            return new CitiesDTO
+            return new WMOResponse<CitiesDTO>
             {
                 Type = "https://httpstatuses.com/200",
                 Title = "OK",
                 Status = StatusCodes.Status200OK,
-                Detail = $"Cities in {country}.",
+                Detail = $"{cities.Count} cities found in {country}.",
                 Instance = context.Request.GetDisplayUrl(),
-
-                Country = country,
-                Cities = _cities,
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new CitiesDTO
+                {
+                    Country = country,
+                    Cities = _cities,
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
 
-        internal static CitiesDTO? CreateNotFoundResponse(
+        internal static WMOResponse<CitiesDTO> CreateNotFoundResponse(
             HttpContext context,
             string country,
             IAppEndpoints endpoints,
             IDataProvider dataProvider)
         {
-            return new CitiesDTO
+            return new WMOResponse<CitiesDTO>
             {
                 Type = "https://httpstatuses.com/404",
                 Title = "Not Found",
                 Status = StatusCodes.Status404NotFound,
                 Detail = $"No cities found in {country}.",
                 Instance = context.Request.GetDisplayUrl(),
-
-                Country = country,
-                Cities = null,
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new CitiesDTO
+                {
+                    Country = country,
+                    Cities = null,
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
 
-        internal static CitiesDTO? CreateValidationErrorResponse(
+        internal static WMOResponse<CitiesDTO> CreateValidationErrorResponse(
             HttpContext context,
             IAppEndpoints endpoints,
             IDataProvider dataProvider)
         {
-            return new CitiesDTO
+            return new WMOResponse<CitiesDTO>
             {
                 Type = "https://httpstatuses.com/400",
                 Title = "One or more validation errors ocuured.",
                 Status = StatusCodes.Status400BadRequest,
                 Detail = "The country must be specified.",
                 Instance = context.Request.GetDisplayUrl(),
-
-                Country = null,
-                Cities = null,
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new CitiesDTO
+                {
+                    Country = null,
+                    Cities = null,
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
 
-        internal static CitiesDTO? CreateErrorResponse(
+        internal static WMOResponse<CitiesDTO> CreateErrorResponse(
             HttpContext context,
             string country,
             IAppEndpoints endpoints,
             IDataProvider dataProvider)
         {
-            return new CitiesDTO
+            return new WMOResponse<CitiesDTO>
             {
                 Type = "https://httpstatuses.com/500",
                 Title = "An unexpected error occurred.",
                 Status = StatusCodes.Status500InternalServerError,
-                Detail = $"An error occurred obtaining cities for {country}.",
+                Detail = $"An error occurred obtaining cities for {country}. " +
+                "You may try again. If the issue persists, please report the error.",
                 Instance = context.Request.GetDisplayUrl(),
-
-                Country = country,
-                Cities = null,
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new CitiesDTO
+                {
+                    Country = country,
+                    Cities = null,
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
     }

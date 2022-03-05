@@ -8,7 +8,7 @@ namespace WeatherAPI.APIs.WMO.Response
 {
     internal static class SearchResults
     {
-        internal static SearchResultsDTO CreateOkResponse(
+        internal static WMOResponse<SearchResultsDTO> CreateOkResponse(
             HttpContext context,
             string keyword,
             List<City> results,
@@ -29,18 +29,20 @@ namespace WeatherAPI.APIs.WMO.Response
                 });
             }
 
-            return new SearchResultsDTO
+            return new WMOResponse<SearchResultsDTO>
             {
                 Type = "https://httpstatuses.com/200",
                 Title = "OK",
                 Status = StatusCodes.Status200OK,
                 Detail = $"{results.Count} cities found.",
                 Instance = context.Request.GetDisplayUrl(),
-
-                Keyword = keyword,
-                Results = _results,
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new SearchResultsDTO
+                {
+                    Keyword = keyword,
+                    Results = _results,
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
 
@@ -70,65 +72,72 @@ namespace WeatherAPI.APIs.WMO.Response
             return cities;
         }
 
-        internal static SearchResultsDTO CreateNotFoundResponse(
+        internal static WMOResponse<SearchResultsDTO> CreateNotFoundResponse(
             HttpContext context,
             string keyword,
             IAppEndpoints endpoints,
             IDataProvider dataProvider)
         {
-            return new SearchResultsDTO
+            return new WMOResponse<SearchResultsDTO>
             {
                 Type = "https://httpstatuses.com/404",
                 Title = "Not Found",
                 Status = StatusCodes.Status404NotFound,
                 Detail = $"No cities were found for keyword: {keyword}",
                 Instance = context.Request.GetDisplayUrl(),
-
-                Keyword = keyword,
-                Results = null,
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new SearchResultsDTO
+                {
+                    Keyword = keyword,
+                    Results = null,
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
 
-        internal static SearchResultsDTO CreateValidationErrorResponse(
+        internal static WMOResponse<SearchResultsDTO> CreateValidationErrorResponse(
             HttpContext context,
             IAppEndpoints endpoints,
             IDataProvider dataProvider)
         {
-            return new SearchResultsDTO
+            return new WMOResponse<SearchResultsDTO>
             {
                 Type = "https://httpstatuses.com/400",
                 Title = "One or more validation errors ocuured.",
                 Status = StatusCodes.Status400BadRequest,
                 Detail = "A keyword for search must be specified.",
                 Instance = context.Request.GetDisplayUrl(),
-
-                Keyword = "",
-                Results = null,
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new SearchResultsDTO
+                {
+                    Keyword = "",
+                    Results = null,
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
 
-        internal static SearchResultsDTO? CreateErrorResource(
+        internal static WMOResponse<SearchResultsDTO> CreateErrorResource(
             HttpContext context,
             string keyword,
             IAppEndpoints endpoints,
             IDataProvider dataProvider)
         {
-            return new SearchResultsDTO
+            return new WMOResponse<SearchResultsDTO>
             {
                 Type = "https://httpstatuses.com/500",
                 Title = "An unexpected error occurred.",
                 Status = StatusCodes.Status500InternalServerError,
-                Detail = "An error occurred searching for cities.",
+                Detail = "An error occurred searching for cities. " +
+                "You may try again. If the issue persists, please report the error.",
                 Instance = context.Request.GetDisplayUrl(),
-
-                Keyword = keyword,
-                Results = null,
-                WMOEndpoints = endpoints.GatewayEndpoints(context),
-                DataProvider = dataProvider.Provider()
+                Content = new SearchResultsDTO
+                {
+                    Keyword = keyword,
+                    Results = null,
+                    WMOEndpoints = endpoints.GatewayEndpoints(context),
+                    DataProvider = dataProvider.Provider()
+                }
             };
         }
     }

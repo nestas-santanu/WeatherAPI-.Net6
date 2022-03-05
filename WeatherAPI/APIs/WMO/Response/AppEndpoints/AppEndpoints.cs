@@ -25,7 +25,7 @@ namespace WeatherAPI.APIs.WMO.Response.AppEndpoints
             {
                 Url = url,
                 Method = "GET",
-                Description = "Get all countries."
+                Title = "Get all countries."
             };
 
             return endpoint;
@@ -53,7 +53,7 @@ namespace WeatherAPI.APIs.WMO.Response.AppEndpoints
             {
                 Url = url,
                 Method = "GET",
-                Description = $"Get cities in {country}."
+                Title = $"Get cities in {country}."
             };
 
             return endpoint;
@@ -80,7 +80,7 @@ namespace WeatherAPI.APIs.WMO.Response.AppEndpoints
             {
                 Url = url,
                 Method = "GET",
-                Description = $"Get weather for city with Id: {cityId}. " +
+                Title = $"Get weather for city with Id: {cityId}. " +
                 "This endpoint will not be used in production, and is for demonstration only."
             };
 
@@ -109,7 +109,7 @@ namespace WeatherAPI.APIs.WMO.Response.AppEndpoints
             {
                 Url = url,
                 Method = "GET",
-                Description = $"Get weather at {city}, {country}."
+                Title = $"Get weather at {city}, {country}."
             };
 
             return endpoint;
@@ -137,7 +137,7 @@ namespace WeatherAPI.APIs.WMO.Response.AppEndpoints
             {
                 Url = url,
                 Method = "GET",
-                Description = $"Search cities by keyword."
+                Title = $"Search cities by keyword."
             };
 
             return endpoint;

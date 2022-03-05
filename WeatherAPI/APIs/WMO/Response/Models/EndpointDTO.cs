@@ -4,6 +4,6 @@
     {
         public string Url { set; get; } = null!;
         public string Method { set; get; } = null!;
-        public string? Description { set; get; }
+        public string? Title { set; get; }
     }
 }
