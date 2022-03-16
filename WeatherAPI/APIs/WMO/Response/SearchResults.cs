@@ -1,7 +1,7 @@
 ﻿using Weather.DataProvider.WMO.Resource;
 using WeatherAPI.APIs.WMO.Response.AppEndpoints;
 using WeatherAPI.APIs.WMO.Response.Models;
-using Weather.DataProvider.WMO.Cities.Service.DTO;
+using Weather.DataProvider.WMO.Data.Cities.DTO;
 using Microsoft.AspNetCore.Http.Extensions;
 
 namespace WeatherAPI.APIs.WMO.Response

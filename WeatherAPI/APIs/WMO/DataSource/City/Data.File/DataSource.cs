@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Options;
-using WeatherAPI.APIs.WMO.Configuration;
+using Weather.DataProvider.WMO.Resource.Cities.Data.File;
 
-namespace WeatherAPI.APIs.WMO.DataSource.City
+namespace WeatherAPI.APIs.WMO.DataSource.City.Data.File
 {
-    public class DataSource : Weather.DataProvider.WMO.Cities.Data.FromFile.IDataSource
+    public class DataSource : IDataSource
     {
-        private readonly Cities resource;
+        private readonly Configuration.Cities.Data.File.Data resource;
 
-        public DataSource(IOptions<Cities> resource)
+        public DataSource(IOptions<Configuration.Cities.Data.File.Data> options)
         {
-            this.resource = resource.Value;
+            resource = options.Value;
         }
 
         public string? FilePath => GetCitiesDataFile();

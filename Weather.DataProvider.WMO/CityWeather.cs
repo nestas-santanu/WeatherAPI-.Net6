@@ -1,5 +1,5 @@
 ﻿using log4net;
-using Weather.DataProvider.WMO.Cities.Service;
+using Weather.DataProvider.WMO.Data.Cities;
 using Weather.DataProvider.WMO.Service;
 
 namespace Weather.DataProvider.WMO
@@ -8,7 +8,7 @@ namespace Weather.DataProvider.WMO
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(CityWeather));
 
-        private readonly Weather.DataProvider.WMO.Cities.Service.ICity cityService;
+        private readonly Weather.DataProvider.WMO.Data.Cities.ICity cityService;
         private readonly Weather.DataProvider.WMO.Service.IForecast forecastService;
 
         public CityWeather(ICity cityService, IForecast forecastService)
@@ -21,7 +21,7 @@ namespace Weather.DataProvider.WMO
         {
             try
             {
-                Cities.Service.DTO.City? _city
+                Data.Cities.DTO.City? _city
                     = await cityService.GetCityAsync(cityId).ConfigureAwait(false);
 
                 if (_city == null)
@@ -44,7 +44,7 @@ namespace Weather.DataProvider.WMO
                 string city = _city.Name;
 
                 Service.DTO.Forecast forecast
-                    = await GetForecastAsync(cityId, country, city).ConfigureAwait(false);
+                    = await GetForecastAsync(cityId).ConfigureAwait(false);
 
                 return new Service.DTO.Weather
                 {
@@ -67,7 +67,7 @@ namespace Weather.DataProvider.WMO
         {
             try
             {
-                Cities.Service.DTO.City? _city
+                Data.Cities.DTO.City? _city
                     = await cityService.GetCityAsync(country, city).ConfigureAwait(false);
 
                 if (_city == null)
@@ -89,7 +89,7 @@ namespace Weather.DataProvider.WMO
                 int cityId = _city.Id;
 
                 Service.DTO.Forecast forecast
-                    = await GetForecastAsync(cityId, country, city).ConfigureAwait(false);
+                    = await GetForecastAsync(cityId).ConfigureAwait(false);
 
                 return new Service.DTO.Weather
                 {
@@ -108,7 +108,7 @@ namespace Weather.DataProvider.WMO
             }
         }
 
-        private async Task<Service.DTO.Forecast> GetForecastAsync(int cityId, string country, string city)
+        private async Task<Service.DTO.Forecast> GetForecastAsync(int cityId)
         {
             var result
                 = await forecastService.GetForecastDataAsync(cityId).ConfigureAwait(false);

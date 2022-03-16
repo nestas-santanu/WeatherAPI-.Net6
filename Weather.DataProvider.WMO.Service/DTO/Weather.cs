@@ -42,8 +42,8 @@
 
     public class WeatherCondition
     {
-        public string Description { get; set; } = string.Empty;
-        public WeatherIcon? Icon { get; set; }
+        public string Description { get; set; } = null!;
+        public WeatherIcon Icon { get; set; } = new();
     }
 
     public class Temperature
@@ -60,7 +60,8 @@
 
     public class WeatherIcon
     {
-        public int Id { get; set; }
-        public string Value { get; set; } = string.Empty;
+        public string WMOIcon { get; set; } = string.Empty;
+        public string? AltIcon { get; set; }
+        public string? Server { get; set; }
     }
 }

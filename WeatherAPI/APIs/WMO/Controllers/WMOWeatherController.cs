@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Weather.DataProvider.WMO.Cities.Service;
+using Weather.DataProvider.WMO.Data.Cities;
 using Weather.DataProvider.WMO.Resource;
 using Weather.DataProvider.WMO.Service;
 using WeatherAPI.APIs.WMO.Response.AppEndpoints;
@@ -19,7 +19,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
         private readonly ILogger<WMOWeatherController> logger;
 
         private readonly Weather.DataProvider.WMO.Service.IWeather weatherService;
-        private readonly Weather.DataProvider.WMO.Cities.Service.ICity cityService;
+        private readonly Weather.DataProvider.WMO.Data.Cities.ICity cityService;
 
         /// <summary>
         /// to generate links embedded in the response
@@ -51,11 +51,11 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// <returns></returns>
         /// <response code="200">Returns the API Gateway endpoints.</response>
         /// <response code="500">A server error has occured.
-        /// The API will return the same schema as in response code 200. 
+        /// The API will return the same schema as in response code 200.
         /// The 'detail' element will have information about the error.
         /// </response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(WMOResponse<APIGatewayDTO>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WMOResponse<APIGatewayDTO>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("", Name = "WMOAPIGateway")]
         public IActionResult GetAPIGateway()
@@ -99,7 +99,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// The API will return the same schema as in response code 200. However, the 'countries' element will be null.
         /// </response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(WMOResponse<CountriesDTO>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WMOResponse<CountriesDTO>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("countries", Name = "WMOCountries")]
@@ -170,7 +170,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// The API will return the same schema as in response code 200. However, the 'results' element will be null.
         /// </response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(WMOResponse<SearchResultsDTO>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WMOResponse<SearchResultsDTO>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -254,7 +254,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// The API will return the same schema as in response code 200. However, the 'cities' element will be null.
         /// </response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(WMOResponse<CitiesDTO>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WMOResponse<CitiesDTO>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -295,7 +295,6 @@ namespace WeatherAPI.APIs.WMO.Controllers
                             country,
                             endpoints,
                             acknowledgement);
-
 
                     return new NotFoundObjectResult(reponse)
                     {
@@ -359,7 +358,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// The API will return the same schema as in response code 200. However, the 'weather' element will be null.
         /// </response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(WMOResponse<WeatherDTO>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WMOResponse<WeatherDTO>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -495,7 +494,7 @@ namespace WeatherAPI.APIs.WMO.Controllers
         /// The API will return the same schema as in response code 200. However, the 'weather' element will be null.
         /// </response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(WMOResponse<WeatherDTO>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WMOResponse<WeatherDTO>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         //[ProducesResponseType(

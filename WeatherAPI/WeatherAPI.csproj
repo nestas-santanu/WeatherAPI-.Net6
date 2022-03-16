@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
+    <UserSecretsId>b3121bf4-00df-44c6-8ba3-3f6bd97edb43</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,8 +25,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Weather.DataProvider.VS.Service\Weather.DataProvider.VS.Service.csproj" />
     <ProjectReference Include="..\Weather.DataProvider.VS\Weather.DataProvider.VS.csproj" />
-    <ProjectReference Include="..\Weather.DataProvider.WMO.Cities.Service\Weather.DataProvider.WMO.Cities.Service.csproj" />
-    <ProjectReference Include="..\Weather.DataProvider.WMO.Cities\Weather.DataProvider.WMO.Cities.csproj" />
+    <ProjectReference Include="..\Weather.DataProvider.WMO.Data.Cities\Weather.DataProvider.WMO.Data.Cities.csproj" />
+    <ProjectReference Include="..\Weather.DataProvider.WMO.Data.File\Weather.DataProvider.WMO.Data.File.csproj" />
+    <ProjectReference Include="..\Weather.DataProvider.WMO.Data.WeatherIcons\Weather.DataProvider.WMO.Data.WeatherIcons.csproj" />
     <ProjectReference Include="..\Weather.DataProvider.WMO.Resource\Weather.DataProvider.WMO.Resource.csproj" />
     <ProjectReference Include="..\Weather.DataProvider.WMO.Service\Weather.DataProvider.WMO.Service.csproj" />
     <ProjectReference Include="..\Weather.DataProvider.WMO\Weather.DataProvider.WMO.csproj" />
@@ -35,6 +37,18 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="APIs\WMO\DataSource\WeatherIcons\data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="APIs\WMO\DataSource\City\Cities.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

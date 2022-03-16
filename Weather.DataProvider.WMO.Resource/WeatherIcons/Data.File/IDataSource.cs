@@ -1,4 +1,4 @@
-﻿namespace Weather.DataProvider.WMO.Cities.Data.FromFile
+﻿namespace Weather.DataProvider.WMO.Resource.WeatherIcons.Data.File
 {
     public interface IDataSource
     {

@@ -1,6 +1,6 @@
-﻿namespace WeatherAPI.APIs.WMO.Configuration
+﻿namespace WeatherAPI.APIs.WMO.Configuration.Cities.Data.File
 {
-    public class Cities
+    public class Data
     {
         public const string Path = "WeatherDataProvider:WMO:Cities:File";
 

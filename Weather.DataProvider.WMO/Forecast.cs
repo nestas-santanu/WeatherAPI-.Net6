@@ -1,5 +1,6 @@
 ﻿using log4net;
 using Newtonsoft.Json;
+using Weather.DataProvider.WMO.Data.WeatherIcons;
 using Weather.DataProvider.WMO.DTO;
 using Weather.DataProvider.WMO.Resource;
 using Weather.DataProvider.WMO.Service.DTO;
@@ -14,11 +15,16 @@ namespace Weather.DataProvider.WMO
 
         private readonly Weather.DataProvider.WMO.Resource.IForecast forecastService;
         private readonly Weather.HTTPService.Service.IRequest httpService;
+        private readonly Weather.DataProvider.WMO.Data.WeatherIcons.IWeatherIcon weatherIconService;
 
-        public Forecast(IForecast forecastService, IRequest httpService)
+        public Forecast(
+            IForecast forecastService,
+            IRequest httpService,
+            IWeatherIcon weatherIconService)
         {
             this.forecastService = forecastService;
             this.httpService = httpService;
+            this.weatherIconService = weatherIconService;
         }
 
         public async Task<Response> GetForecastDataAsync(int cityId)
@@ -98,7 +104,9 @@ namespace Weather.DataProvider.WMO
 
                 //forecasts are not available for many cities, example: Baroda, India; all cities in Bangladesh
                 //these should be returned as a 404 Not Found
-                var forecasts = GetDailyForecasts(data.City.Forecast.ForecastDay);
+                var forecasts
+                    = await GetDailyForecastsAsync(data.City.Forecast.ForecastDay).ConfigureAwait(false);
+
                 if (forecasts.Count == 0)
                 {
                     return new Response
@@ -122,7 +130,7 @@ namespace Weather.DataProvider.WMO
                     {
                         DateIssued = GetDate(data.City.Forecast.IssueDate),
                         Timezone = data.City.Forecast.TimeZone,
-                        Forecasts = GetDailyForecasts(data.City.Forecast.ForecastDay)
+                        Forecasts = forecasts
                     }
                 };
             }
@@ -146,7 +154,7 @@ namespace Weather.DataProvider.WMO
             return null;
         }
 
-        private static List<DailyForecast> GetDailyForecasts(List<DTO.ForecastDay> forecastDays)
+        private async Task<List<DailyForecast>> GetDailyForecastsAsync(List<DTO.ForecastDay> forecastDays)
         {
             List<DailyForecast> dailyForecasts = new();
 
@@ -171,16 +179,47 @@ namespace Weather.DataProvider.WMO
                     Condition = new WeatherCondition
                     {
                         Description = item.Weather,
-                        Icon = new WeatherIcon
-                        {
-                            Id = item.WeatherIcon,
-                            Value = ""
-                        }
+                        Icon = await GetWeatherIconAsync(item.WeatherIcon).ConfigureAwait(false)
                     }
                 });
             }
 
             return dailyForecasts;
+        }
+
+        private async Task<WeatherIcon> GetWeatherIconAsync(int iconId)
+        {
+            try
+            {
+                Data.WeatherIcons.DTO.WeatherIcon? icon
+                    = await weatherIconService.GetWeatherIconAsync(iconId).ConfigureAwait(false);
+
+                if (icon == null)
+                {
+                    return new WeatherIcon
+                    {
+                        WMOIcon = "",
+                        AltIcon = "",
+                        Server = ""
+                    };
+                }
+
+                return new WeatherIcon
+                {
+                    WMOIcon = icon.Icon.WMOIcon,
+                    AltIcon = icon.Icon.AltIcon,
+                    Server = icon.IconServer
+                };
+            }
+            catch (Exception)
+            {
+                return new WeatherIcon
+                {
+                    WMOIcon = "",
+                    AltIcon = "",
+                    Server = ""
+                };
+            }
         }
     }
 }

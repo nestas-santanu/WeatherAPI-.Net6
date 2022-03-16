@@ -1,4 +1,4 @@
-﻿namespace Weather.DataProvider.WMO.Cities.Service
+﻿namespace Weather.DataProvider.WMO.Data.Cities
 {
     public interface ICity
     {

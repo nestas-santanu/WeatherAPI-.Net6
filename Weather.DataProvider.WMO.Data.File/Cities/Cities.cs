@@ -1,18 +1,21 @@
-﻿using log4net;
-using Weather.DataProvider.WMO.Cities.Service.Data;
-using Weather.DataProvider.WMO.Cities.Service.DTO;
+﻿using LazyCache;
+using log4net;
+using Weather.DataProvider.WMO.Data.Cities.DTO;
+using Weather.DataProvider.WMO.Resource.Cities.Data.File;
 
-namespace Weather.DataProvider.WMO.Cities
+namespace Weather.DataProvider.WMO.Data.File.Cities
 {
-    public class Cities : Weather.DataProvider.WMO.Cities.Service.ICity
+    public class Cities : Weather.DataProvider.WMO.Data.Cities.ICity
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(Cities));
 
-        public readonly Weather.DataProvider.WMO.Cities.Service.Data.IRead dataReadService;
+        private readonly Weather.DataProvider.WMO.Resource.Cities.Data.File.IDataSource dataSource;
+        private readonly IAppCache cache;
 
-        public Cities(IRead dataReadService)
+        public Cities(IDataSource dataSource, IAppCache cache)
         {
-            this.dataReadService = dataReadService;
+            this.dataSource = dataSource;
+            this.cache = cache;
         }
 
         public async Task<List<string>> GetCountriesAsync()
@@ -22,7 +25,7 @@ namespace Weather.DataProvider.WMO.Cities
             try
             {
                 var data
-                    = await dataReadService.GetCitiesAsync().ConfigureAwait(false);
+                    = await GetCitiesAsync().ConfigureAwait(false);
 
                 if (data.Count == 0)
                 {
@@ -44,7 +47,7 @@ namespace Weather.DataProvider.WMO.Cities
             try
             {
                 var data
-                    = await dataReadService.GetCitiesAsync().ConfigureAwait(false);
+                    = await GetCitiesAsync().ConfigureAwait(false);
 
                 if (data.Count == 0)
                 {
@@ -76,7 +79,7 @@ namespace Weather.DataProvider.WMO.Cities
             try
             {
                 var data
-                    = await dataReadService.GetCitiesAsync().ConfigureAwait(false);
+                    = await GetCitiesAsync().ConfigureAwait(false);
 
                 if (data.Count == 0)
                 {
@@ -108,7 +111,7 @@ namespace Weather.DataProvider.WMO.Cities
             try
             {
                 var data
-                    = await dataReadService.GetCitiesAsync().ConfigureAwait(false);
+                    = await GetCitiesAsync().ConfigureAwait(false);
 
                 if (data.Count == 0)
                 {
@@ -141,7 +144,7 @@ namespace Weather.DataProvider.WMO.Cities
             try
             {
                 var data
-                    = await dataReadService.GetCitiesAsync().ConfigureAwait(false);
+                    = await GetCitiesAsync().ConfigureAwait(false);
 
                 if (data.Count == 0)
                 {
@@ -168,56 +171,85 @@ namespace Weather.DataProvider.WMO.Cities
             }
         }
 
-        //public async Task<List<CitiesByCountry>> GetAllCitiesAsync()
-        //{
-        //    try
-        //    {
-        //        List<CitiesByCountry> citiesByCountries = new();
+        private async Task<List<City>> GetCitiesAsync()
+        {
+            try
+            {
+                List<City> cities
+                    = await cache
+                        .GetOrAddAsync(
+                            "Cities",
+                            async () => await ReadDataFromFileAsync().ConfigureAwait(false),
+                            new TimeSpan(24, 0, 0))
+                        .ConfigureAwait(false);
 
-        //        var cities
-        //            = await dataReadService.GetCitiesAsync().ConfigureAwait(false);
+                return cities;
+            }
+            catch (Exception e)
+            {
+                log.Error("", e);
 
-        //        if (cities.Count == 0)
-        //        {
-        //            return citiesByCountries;
-        //        }
+                throw;
+            }
+        }
 
-        //        IEnumerable<IGrouping<string, DTO.City>>? groupByCountry
-        //            = cities.GroupBy(g => g.Country);
+        private async Task<List<City>> ReadDataFromFileAsync()
+        {
+            List<City> cities = new();
 
-        //        foreach (var group in groupByCountry)
-        //        {
-        //            citiesByCountries.Add(new CitiesByCountry
-        //            {
-        //                Country = group.Key,
-        //                Cities = GetCities(group)
-        //            });
-        //        }
+            //get the file
+            string? filePath = dataSource.FilePath;
 
-        //        return citiesByCountries;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        log.Error(e);
+            if (filePath == null)
+            {
+                throw new Exception("The path to the cities resource file could not be determined.");
+            }
 
-        //        throw;
-        //    }
-        //}
+            //read the file
+            //create the city object
+            //add to cities list
+            List<string> lines = new();
 
-        //private static List<Service.DTO.City> GetCities(IGrouping<string, DTO.City> group)
-        //{
-        //    List<Service.DTO.City> cities = new(0);
+            using (StreamReader reader = new(filePath))
+            {
+                string? line = await reader.ReadLineAsync().ConfigureAwait(false);
 
-        //    foreach (var item in group)
-        //    {
-        //        cities.Add(new City
-        //        {
-        //            Id = item.Id,
-        //            Name = item.Name
-        //        });
-        //    }
+                while (line != null)
+                {
+                    lines.Add(line);
 
-        //    return cities;
-        //}
+                    line = await reader.ReadLineAsync().ConfigureAwait(false);
+                }
+            }
+
+            if (lines.Count > 0)
+            {
+                //removes the header in the file
+                lines.RemoveAt(0);
+            }
+
+            foreach (var line in lines)
+            {
+                try
+                {
+                    string[] split = line.Split(';');
+
+                    cities.Add(new City
+                    {
+                        Id = Convert.ToInt32(split[2].Trim('"')),
+                        Name = split[1].Trim('"'),
+                        Country = split[0].Trim('"')
+                    });
+                }
+                catch (Exception e)
+                {
+                    log.Error($"line: {line}", e);
+
+                    continue;
+                }
+            }
+
+            return cities;
+        }
     }
 }

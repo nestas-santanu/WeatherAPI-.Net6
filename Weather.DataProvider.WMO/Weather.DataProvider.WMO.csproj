@@ -12,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Weather.DataProvider.WMO.Cities.Service\Weather.DataProvider.WMO.Cities.Service.csproj" />
+    <ProjectReference Include="..\Weather.DataProvider.WMO.Data.Cities\Weather.DataProvider.WMO.Data.Cities.csproj" />
+    <ProjectReference Include="..\Weather.DataProvider.WMO.Data.WeatherIcons\Weather.DataProvider.WMO.Data.WeatherIcons.csproj" />
     <ProjectReference Include="..\Weather.DataProvider.WMO.Resource\Weather.DataProvider.WMO.Resource.csproj" />
     <ProjectReference Include="..\Weather.DataProvider.WMO.Service\Weather.DataProvider.WMO.Service.csproj" />
     <ProjectReference Include="..\Weather.HTTPService.Service\Weather.HTTPService.Service.csproj" />

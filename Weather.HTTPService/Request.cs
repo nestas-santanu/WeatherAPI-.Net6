@@ -22,9 +22,9 @@ namespace Weather.HTTPService
             try
             {
                 ServicePointManager.SecurityProtocol
-                    = SecurityProtocolType.Tls
-                    | SecurityProtocolType.Tls11
-                    | SecurityProtocolType.Tls12;
+                    = SecurityProtocolType.Tls11
+                    | SecurityProtocolType.Tls12
+                    | SecurityProtocolType.Tls13;
 
                 using HttpRequestMessage httpRequestMessage = new();
                 httpRequestMessage.Method = method.GetHttpMethod();

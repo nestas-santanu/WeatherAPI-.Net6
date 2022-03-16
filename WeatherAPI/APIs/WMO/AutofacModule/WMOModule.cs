@@ -2,16 +2,10 @@
 
 namespace WeatherAPI.APIs.WMO.AutofacModule
 {
-    public class WMOModule: Module
+    public class WMOModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //data provider
-            builder
-                .RegisterType<WeatherAPI.APIs.WMO.DataSource.DataProvider>()
-                .As<Weather.DataProvider.WMO.Resource.IDataProvider>()
-                .InstancePerLifetimeScope();
-
             //process the weather
             builder
                 .RegisterType<Weather.DataProvider.WMO.CityWeather>()
@@ -19,13 +13,14 @@ namespace WeatherAPI.APIs.WMO.AutofacModule
                 .InstancePerLifetimeScope();
 
             //get the data
-            //forecast resource (from configuration)
+            //forecast
+            //this gets the wmo endpoint
             builder
                 .RegisterType<WeatherAPI.APIs.WMO.DataSource.Forecast>()
                 .As<Weather.DataProvider.WMO.Resource.IForecast>()
                 .InstancePerLifetimeScope();
 
-            //get the forecast forecast
+            //get the forecast
             builder
                 .RegisterType<Weather.DataProvider.WMO.Forecast>()
                 .As<Weather.DataProvider.WMO.Service.IForecast>()
@@ -34,21 +29,43 @@ namespace WeatherAPI.APIs.WMO.AutofacModule
             //cities
             //this gets countries/cities
             builder
-                .RegisterType<Weather.DataProvider.WMO.Cities.Cities>()
-                .As<Weather.DataProvider.WMO.Cities.Service.ICity>()
+                .RegisterType<Weather.DataProvider.WMO.Data.File.Cities.Cities>()
+                .As<Weather.DataProvider.WMO.Data.Cities.ICity>()
                 .InstancePerLifetimeScope();
 
             //cities are read from a file
             //this gets the file location
             builder
-                .RegisterType<WeatherAPI.APIs.WMO.DataSource.City.DataSource>()
-                .As<Weather.DataProvider.WMO.Cities.Data.FromFile.IDataSource>()
+                .RegisterType<WeatherAPI.APIs.WMO.DataSource.City.Data.File.DataSource>()
+                .As<Weather.DataProvider.WMO.Resource.Cities.Data.File.IDataSource>()
                 .InstancePerLifetimeScope();
 
-            //this reads from the file
+            //weather icons
+            //this gets the weather icons
             builder
-                .RegisterType<Weather.DataProvider.WMO.Cities.Data.FromFile.Read>()
-                .As<Weather.DataProvider.WMO.Cities.Service.Data.IRead>()
+                .RegisterType<Weather.DataProvider.WMO.Data.File.WeatherIcons.Icons>()
+                .As<Weather.DataProvider.WMO.Data.WeatherIcons.IWeatherIcon>()
+                .InstancePerLifetimeScope();
+
+            //weather icons are read from a file
+            //this gets the file location
+            builder
+                .RegisterType<WeatherAPI.APIs.WMO.DataSource.WeatherIcons.Data.File.DataSource>()
+                .As<Weather.DataProvider.WMO.Resource.WeatherIcons.Data.File.IDataSource>()
+                .InstancePerLifetimeScope();
+
+            //weather icons are served from a url
+            //this gets the urls
+            builder
+                .RegisterType<WeatherAPI.APIs.WMO.DataSource.WeatherIcons.IconServer>()
+                .As<Weather.DataProvider.WMO.Resource.WeatherIcons.IIconServer>()
+                .InstancePerLifetimeScope();
+
+            //others
+            //data provider
+            builder
+                .RegisterType<WeatherAPI.APIs.WMO.DataSource.DataProvider>()
+                .As<Weather.DataProvider.WMO.Resource.IDataProvider>()
                 .InstancePerLifetimeScope();
 
             //resource endpoints in response

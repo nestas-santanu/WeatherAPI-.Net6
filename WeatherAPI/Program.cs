@@ -19,8 +19,12 @@ builder.Logging.AddLog4Net();
 //configuration service
 builder.Services.Configure<Forecast>(
     builder.Configuration.GetSection(Forecast.Path));
-builder.Services.Configure<Cities>(
-    builder.Configuration.GetSection(Cities.Path));
+builder.Services.Configure<WeatherAPI.APIs.WMO.Configuration.Cities.Data.File.Data>(
+    builder.Configuration.GetSection(WeatherAPI.APIs.WMO.Configuration.Cities.Data.File.Data.Path));
+builder.Services.Configure<WeatherAPI.APIs.WMO.Configuration.WeatherIcons.Data.File.Data>(
+    builder.Configuration.GetSection(WeatherAPI.APIs.WMO.Configuration.WeatherIcons.Data.File.Data.Path));
+builder.Services.Configure<WeatherAPI.APIs.WMO.Configuration.WeatherIcons.Server>(
+    builder.Configuration.GetSection(WeatherAPI.APIs.WMO.Configuration.WeatherIcons.Server.Path));
 builder.Services.Configure<Organization>(
     builder.Configuration.GetSection(Organization.Path));
 
@@ -29,12 +33,11 @@ builder.Services.Configure<Organization>(
 // Call UseServiceProviderFactory on the Host sub property
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
-// Call ConfigureContainer on the Host sub property
+//Call ConfigureContainer on the Host sub property
 builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 {
-    // Declare services with proper lifetime
-    // declaring services manually
-
+    //// Declare services with proper lifetime
+    //// declaring services manually
     //weather data provider: visual studio
     builder.RegisterModule(new VSModule());
 
@@ -53,8 +56,7 @@ builder.Services.AddHttpClient();
 
 //Caching services.
 //https://www.nuget.org/packages/LazyCache/
-//We read cities from a file. Cities don't change, so the contents of the file are cached.
-//see class Weather.DataProvider.WMO.Cities.Data.FromFile.Read
+//We read cities nad weather icons from a file. These don't change, so the contents of the files are cached.
 builder.Services.AddLazyCache();
 
 //Exceptions using ProblemsDetails

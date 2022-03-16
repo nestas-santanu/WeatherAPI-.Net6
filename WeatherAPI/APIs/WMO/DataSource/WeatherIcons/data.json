@@ -1,0 +1,522 @@
+[
+  {
+    "id": 101,
+    "title": "Sandstorm",
+    "icon": {
+      "wmo": "1.png",
+      "alt": "wi-sandstorm.svg"
+    }
+  },
+  {
+    "id": 102,
+    "title": "Duststorm",
+    "icon": {
+      "wmo": "1.png",
+      "alt": "wi-sandstorm.svg"
+    }
+  },
+  {
+    "id": 103,
+    "title": "Sand",
+    "icon": {
+      "wmo": "1.png",
+      "alt": "wi-sandstorm.svg"
+    }
+  },
+  {
+    "id": 104,
+    "title": "Dust",
+    "icon": {
+      "wmo": "1.png",
+      "alt": "wi-sandstorm.svg"
+    }
+  },
+  {
+    "id": 201,
+    "title": "Thunderstorms",
+    "icon": {
+      "wmo": "2.png",
+      "alt": "wi-storm-showers.svg"
+    }
+  },
+  {
+    "id": 202,
+    "title": "Thundershowers",
+    "icon": {
+      "wmo": "2.png",
+      "alt": "wi-storm-showers.svg"
+    }
+  },
+  {
+    "id": 203,
+    "title": "Storm",
+    "icon": {
+      "wmo": "2.png",
+      "alt": "wi-storm-showers.svg"
+    }
+  },
+  {
+    "id": 204,
+    "title": "Lightning",
+    "icon": {
+      "wmo": "2.png",
+      "alt": "wi-storm-showers.svg"
+    }
+  },
+  {
+    "id": 301,
+    "title": "Hail",
+    "icon": {
+      "wmo": "3.png",
+      "alt": "bs-cloud-hail.svg"
+    }
+  },
+  {
+    "id": 401,
+    "title": "Blowing Snow",
+    "icon": {
+      "wmo": "4.png",
+      "alt": "uk-blizzard.svg"
+    }
+  },
+  {
+    "id": 402,
+    "title": "Blizzard",
+    "icon": {
+      "wmo": "4.png",
+      "alt": "uk-blizzard.svg"
+    }
+  },
+  {
+    "id": 403,
+    "title": "Snowdrift",
+    "icon": {
+      "wmo": "4.png",
+      "alt": "uk-blizzard.svg"
+    }
+  },
+  {
+    "id": 404,
+    "title": "Snowstorm",
+    "icon": {
+      "wmo": "4.png",
+      "alt": "uk-blizzard.svg"
+    }
+  },
+  {
+    "id": 501,
+    "title": "Snow Showers",
+    "icon": {
+      "wmo": "5.png",
+      "alt": "bs-cloud-snow.svg"
+    }
+  },
+  {
+    "id": 502,
+    "title": "Flurries",
+    "icon": {
+      "wmo": "5.png",
+      "alt": "bs-cloud-snow.svg"
+    }
+  },
+  {
+    "id": 601,
+    "title": "Snow",
+    "icon": {
+      "wmo": "6.png",
+      "alt": "bs-cloud-snow.svg"
+    }
+  },
+  {
+    "id": 602,
+    "title": "Heavy Snow",
+    "icon": {
+      "wmo": "6.png",
+      "alt": "bs-cloud-snow.svg"
+    }
+  },
+  {
+    "id": 603,
+    "title": "Snowfall",
+    "icon": {
+      "wmo": "6.png",
+      "alt": "bs-cloud-snow.svg"
+    }
+  },
+  {
+    "id": 701,
+    "title": "Light Snow",
+    "icon": {
+      "wmo": "7.png",
+      "alt": "wi-snow.svg"
+    }
+  },
+  {
+    "id": 801,
+    "title": "Sleet",
+    "icon": {
+      "wmo": "8.png",
+      "alt": "bs-cloud-sleet.svg"
+    }
+  },
+  {
+    "id": 901,
+    "title": "Showers",
+    "icon": {
+      "wmo": "9.png",
+      "alt": "bs-cloud-rain-heavy.svg"
+    }
+  },
+  {
+    "id": 902,
+    "title": "Heavy Showers",
+    "icon": {
+      "wmo": "9.png",
+      "alt": "bs-cloud-rain-heavy.svg"
+    }
+  },
+  {
+    "id": 903,
+    "title": "Rainshower",
+    "icon": {
+      "wmo": "9.png",
+      "alt": "bs-cloud-rain-heavy.svg"
+    }
+  },
+  {
+    "id": 1001,
+    "title": "Occasional Showers",
+    "icon": {
+      "wmo": "10.png",
+      "alt": "wi-showers.svg"
+    }
+  },
+  {
+    "id": 1002,
+    "title": "Scattered Showers",
+    "icon": {
+      "wmo": "10.png",
+      "alt": "wi-showers.svg"
+    }
+  },
+  {
+    "id": 1101,
+    "title": "Isolated Showers",
+    "icon": {
+      "wmo": "11.png",
+      "alt": "wi-showers.svg"
+    }
+  },
+  {
+    "id": 1201,
+    "title": "Light Showers",
+    "icon": {
+      "wmo": "12.png",
+      "alt": "wi-showers.svg"
+    }
+  },
+  {
+    "id": 1301,
+    "title": "Freezing Rain",
+    "icon": {
+      "wmo": "13.png",
+      "alt": ""
+    }
+  },
+  {
+    "id": 1401,
+    "title": "Rain",
+    "icon": {
+      "wmo": "14.png",
+      "alt": "wi-rain.svg"
+    }
+  },
+  {
+    "id": 1501,
+    "title": "Drizzle",
+    "icon": {
+      "wmo": "15.png",
+      "alt": "wi-sprinkle.svg"
+    }
+  },
+  {
+    "id": 1502,
+    "title": "Light Rain",
+    "icon": {
+      "wmo": "15.png",
+      "alt": "wi-sprinkle.svg"
+    }
+  },
+  {
+    "id": 1601,
+    "title": "Fog",
+    "icon": {
+      "wmo": "16.png",
+      "alt": "wi-fog.svg"
+    }
+  },
+  {
+    "id": 1701,
+    "title": "Mist",
+    "icon": {
+      "wmo": "17.png",
+      "alt": ""
+    }
+  },
+  {
+    "id": 1801,
+    "title": "Smoke",
+    "icon": {
+      "wmo": "18.png",
+      "alt": "wi-smoke.svg"
+    }
+  },
+  {
+    "id": 1901,
+    "title": "Haze",
+    "icon": {
+      "wmo": "19.png",
+      "alt": "wi-dust.svg"
+    }
+  },
+  {
+    "id": 2001,
+    "title": "Overcast",
+    "icon": {
+      "wmo": "20.png",
+      "alt": "wi-cloudy.svg"
+    }
+  },
+  {
+    "id": 2101,
+    "title": "Sunny Intervals",
+    "icon": {
+      "wmo": "21a.png",
+      "alt": "wi-day-cloudy.svg"
+    }
+  },
+  {
+    "id": 2102,
+    "title": "No Rain",
+    "icon": {
+      "wmo": "21a.png",
+      "alt": "wi-day-cloudy.svg"
+    }
+  },
+  {
+    "id": 2103,
+    "title": "Clearing",
+    "icon": {
+      "wmo": "21a.png",
+      "alt": "wi-day-cloudy.svg"
+    }
+  },
+  {
+    "id": 2201,
+    "title": "Sunny Periods",
+    "icon": {
+      "wmo": "22a.png",
+      "alt": "wi-day-sunny-overcast.svg"
+    }
+  },
+  {
+    "id": 2202,
+    "title": "Partly Cloudy",
+    "icon": {
+      "wmo": "22a.png",
+      "alt": "wi-day-cloudy-high.svg"
+    }
+  },
+  {
+    "id": 2203,
+    "title": "Partly Bright",
+    "icon": {
+      "wmo": "22a.png",
+      "alt": "wi-day-sunny-overcast.svg"
+    }
+  },
+  {
+    "id": 2204,
+    "title": "Mild",
+    "icon": {
+      "wmo": "23a.png",
+      "alt": "wi-day-sunny-overcast.svg"
+    }
+  },
+  {
+    "id": 2301,
+    "title": "Cloudy",
+    "icon": {
+      "wmo": "23a.png",
+      "alt": "wi-cloud.svg"
+    }
+  },
+  {
+    "id": 2302,
+    "title": "Mostly Cloudy",
+    "icon": {
+      "wmo": "23a.png",
+      "alt": "wi-cloud.svg"
+    }
+  },
+  {
+    "id": 2401,
+    "title": "Bright",
+    "icon": {
+      "wmo": "24a.png",
+      "alt": "wi-day-sunny.svg"
+    }
+  },
+  {
+    "id": 2402,
+    "title": "Sunny",
+    "icon": {
+      "wmo": "24a.png",
+      "alt": "wi-day-sunny.svg"
+    }
+  },
+  {
+    "id": 2403,
+    "title": "Fair",
+    "icon": {
+      "wmo": "24a.png",
+      "alt": "wi-day-sunny.svg"
+    }
+  },
+  {
+    "id": 2501,
+    "title": "Fine",
+    "icon": {
+      "wmo": "24a.png",
+      "alt": "wi-day-sunny.svg"
+    }
+  },
+  {
+    "id": 2502,
+    "title": "Clear",
+    "icon": {
+      "wmo": "24a.png",
+      "alt": "wi-day-sunny.svg"
+    }
+  },
+  {
+    "id": 2601,
+    "title": "Windy",
+    "icon": {
+      "wmo": "26.png",
+      "alt": "uk-strong-wind.svg"
+    }
+  },
+  {
+    "id": 2602,
+    "title": "Squall",
+    "icon": {
+      "wmo": "26.png",
+      "alt": "uk-strong-wind.svg"
+    }
+  },
+  {
+    "id": 2603,
+    "title": "Stormy",
+    "icon": {
+      "wmo": "26.png",
+      "alt": "uk-strong-wind.svg"
+    }
+  },
+  {
+    "id": 2604,
+    "title": "Gale",
+    "icon": {
+      "wmo": "26.png",
+      "alt": "uk-strong-wind.svg"
+    }
+  },
+  {
+    "id": 2701,
+    "title": "Wet",
+    "icon": {
+      "wmo": "27.png",
+      "alt": "bs-moisture.svg"
+    }
+  },
+  {
+    "id": 2702,
+    "title": "Humid",
+    "icon": {
+      "wmo": "27.png",
+      "alt": "bs-moisture.svg"
+    }
+  },
+  {
+    "id": 2801,
+    "title": "Dry",
+    "icon": {
+      "wmo": "28.png",
+      "alt": "wi-hot.svg"
+    }
+  },
+  {
+    "id": 2901,
+    "title": "Freezing",
+    "icon": {
+      "wmo": "29.png",
+      "alt": "uk-freezing.svg"
+    }
+  },
+  {
+    "id": 3001,
+    "title": "Frost",
+    "icon": {
+      "wmo": "30.png",
+      "alt": ""
+    }
+  },
+  {
+    "id": 3101,
+    "title": "Hot",
+    "icon": {
+      "wmo": "31.png",
+      "alt": "bs-thermometer-sun.svg"
+    }
+  },
+  {
+    "id": 3201,
+    "title": "Cold",
+    "icon": {
+      "wmo": "32.png",
+      "alt": "bs-thermometer-snow.svg"
+    }
+  },
+  {
+    "id": 3202,
+    "title": "Chilly",
+    "icon": {
+      "wmo": "32.png",
+      "alt": "bs-thermometer-snow.svg"
+    }
+  },
+  {
+    "id": 3301,
+    "title": "Warm",
+    "icon": {
+      "wmo": "33.png",
+      "alt": "bs-thermometer-half.svg"
+    }
+  },
+  {
+    "id": 3401,
+    "title": "Cool",
+    "icon": {
+      "wmo": "34.png",
+      "alt": "bs-thermometer-low.svg"
+    }
+  },
+  {
+    "id": 3501,
+    "title": "Volcanic Ash",
+    "icon": {
+      "wmo": "35.png",
+      "alt": "wi-volcano.svg"
+    }
+  }
+]
