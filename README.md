@@ -3,16 +3,14 @@ A primer to build a Web API in .NET 6. Requires Visual Studio 2022. Community ed
 
 ### Links
 
-View a working version here: https://nestas-weather-api.azurewebsites.net/api/v1/weather/wmo. Use a client such a Postman to navigate through the links in the response.
+View a working version here: https://nestas-weather-api.azurewebsites.net/api/v1/weather/wmo. Use a client, such as Postman, to navigate through the links in the response.
 
 The Swagger UI is here: https://nestas-weather-api.azurewebsites.net/swagger/index.html.
 
-Weather icons are servered from here: https://lemon-forest-0b08efc10.1.azurestaticapps.net
+Weather icons are served here: https://lemon-forest-0b08efc10.1.azurestaticapps.net
 
 ### Motivation
-To transition developers who have been building Web APIs using the .Net Framework (4-5-4.8) to .NET 6. These developers have missed the .Net Core phase. (This happens when getting a working software to market is more important than transitioning to new frameworks.)
-
-New development will be in the .NET 6 space, and hence the primer.
+To transition developers who have been building Web APIs using the .Net Framework (4-5-4.8) to .NET 6.
 
 ### Why a Weather API?
 Visual Studio creates a WeatherForecast API every time you create a new ASP.NET Core Web API project. This outputs ridiculous values, quite understandable, as the focus is on the Program.cs file and incorporating Open API 3 specifications for documentation.
