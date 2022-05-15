@@ -28,7 +28,7 @@ Individual countries have their own National Meteorological and Hydrological Ser
 
 In 2000, the WMO began establishing the World Weather Information Service (WWIS), to 'provide a centralized source of official weather information on the Internet'. Participating NMHSs provide data from their weather stations to the WWIS. The WWIS makes this available to the public through their website at https://worldweather.wmo.int/en/home.html.
 
-It also provides an API by which data is available for a city. See this at https://worldweather.wmo.int/en/dataguide.html. The city is actually the location of a weather station. The city is actually the location of a weather station. The WWIS has provided every weather station (irrespective of the paricipating NMHS) with a unique City ID.
+It also provides an API by which data is available for a city. See this at https://worldweather.wmo.int/en/dataguide.html. The city is actually the location of a weather station. The WWIS has provided every weather station (irrespective of the paricipating NMHS) with a unique City ID.
 
 ### What does the Weather API provide?
 The WWIS API requires a client to have prior knowledge of the Id of a city.
