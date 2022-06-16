@@ -27,11 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weather.HTTPService.Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weather.HTTPService", "Weather.HTTPService\Weather.HTTPService.csproj", "{0E279A19-3BA7-4B64-91F1-1360A2FB7EC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather.DataProvider.WMO.Data.File", "Weather.DataProvider.WMO.Data.File\Weather.DataProvider.WMO.Data.File.csproj", "{81F90A86-8287-4960-A6F2-CEEDA9A76C26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weather.DataProvider.WMO.Data.File", "Weather.DataProvider.WMO.Data.File\Weather.DataProvider.WMO.Data.File.csproj", "{81F90A86-8287-4960-A6F2-CEEDA9A76C26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather.DataProvider.WMO.Data.Cities", "Weather.DataProvider.WMO.Data.Cities\Weather.DataProvider.WMO.Data.Cities.csproj", "{CB98FC91-038A-4E35-8E88-3D683E71FE8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weather.DataProvider.WMO.Data.Cities", "Weather.DataProvider.WMO.Data.Cities\Weather.DataProvider.WMO.Data.Cities.csproj", "{CB98FC91-038A-4E35-8E88-3D683E71FE8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather.DataProvider.WMO.Data.WeatherIcons", "Weather.DataProvider.WMO.Data.WeatherIcons\Weather.DataProvider.WMO.Data.WeatherIcons.csproj", "{B2C5296F-855B-45E9-955D-108F358606C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weather.DataProvider.WMO.Data.WeatherIcons", "Weather.DataProvider.WMO.Data.WeatherIcons\Weather.DataProvider.WMO.Data.WeatherIcons.csproj", "{B2C5296F-855B-45E9-955D-108F358606C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
